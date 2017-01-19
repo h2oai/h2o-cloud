@@ -1,0 +1,9 @@
+{
+    "handler": "Microsoft.HDInsight",
+    "version": "0.0.1-preview",    
+    "clusterFilters": {
+        "types": [ "Spark" ],
+        "tiers": [ "Standard", "Premium" ],
+        "versions": [ "3.4" , "3.5" ]
+    }    
+}
