@@ -1,0 +1,106 @@
+{
+    "handler": "Microsoft.Compute.MultiVm",
+    "version": "0.0.1-preview",
+    "parameters": {
+        "basics": [
+            {
+                "name": "adminUsername",
+                "type": "Microsoft.Compute.UserNameTextBox",
+                "label": "Username",
+                "toolTip": "Admin username for the virtual machines.",
+                "osPlatform": "Linux"
+            },
+            {
+                  "name": "SSHCredntials",
+                  "type": "Microsoft.Compute.CredentialsCombo",
+                  "label": {
+                    "authenticationType": "Authentication type",
+                    "password": "Password",
+                    "confirmPassword": "Confirm password",
+                    "sshPublicKey": "SSH public key"
+                  },
+                  "toolTip": {
+                    "authenticationType": "",
+                    "password": "",
+                    "sshPublicKey": ""
+                  },
+                            "constraints": {
+                                "required": true
+                            },
+                  "options": {
+                    "hideConfirmation": false
+                  },
+                  "osPlatform": "Linux"
+                }],
+        "steps": [
+            {
+                "name": "infrastructureConfig",
+                "label": "Infrastructure settings",
+                "subLabel": {
+                    "preValidation": "Configure the infrastructure settings",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "Infrastructure settings",
+                "elements": [
+                    {
+                        "name": "VmCount",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Number of VMs, set to more than 1 if a cluster is desired",
+                        "defaultValue": "1"
+                    },
+                    {
+                        "name": "storageAccount",
+                        "type": "Microsoft.Storage.StorageAccountSelector",
+                        "label": "Storage account",
+                        "defaultValue": {
+                            "type": "Premium_LRS"
+                        },
+                        "allowedValues": [
+                            "Premium_LRS"
+                        ]
+                    },
+                    {
+                        "name": "vmSize",
+                        "type": "Microsoft.Compute.SizeSelector",
+                        "label": "Virtual machine size",
+                        "toolTip": "The size of the virtual machine ",
+                        "recommendedSizes": [
+                            "Standard_DS11_v2",
+                            "Standard_DS12_v2",
+                            "Standard_DS13_v2",
+                            "Standard_DS14_v2"
+                        ],
+                        "constraints": {
+                            "allowedValues": [
+                                "Standard_DS1_v2",
+                                "Standard_DS2_v2",
+                                "Standard_DS3_v2",
+                                "Standard_DS4_v2",
+                                "Standard_DS5_v2",
+                                "Standard_DS11_v2",
+                                "Standard_DS12_v2",
+                                "Standard_DS13_v2",
+                                "Standard_DS14_v2"
+                            ]
+                        },
+                        "osPlatform": "Linux",
+                        "imageReference": {
+                            "publisher": "microsoft-ads",
+                            "offer": "linux-data-science-vm",
+                            "sku": "linuxdsvm"
+                        },
+                        "count": "[steps('infrastructureConfig').VmCount]"
+                    }                    
+                ]
+            }
+        ],
+        "outputs": {
+            "adminUsername": "[basics('adminUsername')]",            
+            "storageAccountType": "[steps('infrastructureConfig').storageAccount.type]",
+            "vmSize": "[steps('infrastructureConfig').vmSize]",
+            "vmCount": "[int(steps('infrastructureConfig').VmCount)]",            
+            "adminPassword": "[basics('SSHCredntials').password]"
+            
+        }
+    }
+}
