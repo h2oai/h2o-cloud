@@ -2,8 +2,8 @@
     "handler": "Microsoft.HDInsight",
     "version": "0.0.1-preview",    
     "clusterFilters": {
-        "types": [ "Spark" ],
+        "types": [ "Spark", "RServer" ],
         "tiers": [ "Standard", "Premium" ],
-        "versions": [ "3.4" , "3.5" ]
+        "versions": [ "3.5" ]
     }    
 }

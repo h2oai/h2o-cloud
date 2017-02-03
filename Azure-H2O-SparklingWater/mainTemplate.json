@@ -179,13 +179,19 @@
                     },
                     {
                         "name": "[concat('edge-install-v0','-' ,uniquestring('h2o-sparklingwater'))]",
-                        "uri": "https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/worker_installs.sh",
+                        "uri": "https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/edgenodeinstall.sh",
                         "parameters": "",
                         "roles": [ "edgenode" ]
                     }
                 ],
                 "uninstallScriptActions": [ ],
-                "httpsEndpoints": [ ],
+              "httpsEndpoints": [
+                {  
+                "subDomainSuffix": "h2o",  
+                "destinationPort": 54321,  
+                "accessModes": ["WebPage"]  
+                }
+              ],
                 "applicationType": "CustomApplication"
             }
         }
