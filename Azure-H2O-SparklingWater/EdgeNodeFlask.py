@@ -40,7 +40,7 @@ def modify_proxy(newIP):
 def api_message():
     if request.headers['Content-Type'] == 'text/plain':
         modify_proxy(request.data.decode("utf-8"))
-        call('nginx -s reload')
+        call('nginx -s reload',shell=True)
         return request.data.decode("utf-8")
     return "415 Unsupported Media Type ;)"
 

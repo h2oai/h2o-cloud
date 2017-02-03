@@ -1,15 +1,8 @@
 #!/bin/bash
 
-echo "update . . ."
-apt-get update
-
-
-echo "Installing Nginx"
-apt-get install nginx 
 
 echo " Configure Default Proxy Server"
 cd /etc/nginx/conf.d/
-rm default.conf
 wget https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/h2o.conf
 
 echo "Starting nginx ..."
