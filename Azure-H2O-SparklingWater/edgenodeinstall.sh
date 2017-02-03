@@ -3,6 +3,7 @@
 
 echo " Configure Default Proxy Server"
 cd /etc/nginx 
+rm nginx.conf
 wget https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/nginx.conf
 cd /etc/nginx/conf.d/
 wget https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/h2o.conf
@@ -16,4 +17,4 @@ wget https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/Ed
 echo "Set RESTful api"
 export FLASK_APP=EdgeNodeFlask.py
 echo " Start the FLASK RESTful API"
-python EdgeNodeFlask.py
+python EdgeNodeFlask.py &
