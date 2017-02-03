@@ -2,6 +2,8 @@
 
 
 echo " Configure Default Proxy Server"
+cd /etc/nginx 
+wget https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/nginx.conf
 cd /etc/nginx/conf.d/
 wget https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/h2o.conf
 
