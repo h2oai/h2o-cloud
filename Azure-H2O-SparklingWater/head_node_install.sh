@@ -38,7 +38,7 @@ echo "Downloading Sparkling Water version ${version}.${h2oBuild} ..."
 wget http://h2o-release.s3.amazonaws.com/sparkling-water/${SparklingBranch}/${h2oBuild}/sparkling-water-${version}.${h2oBuild}.zip &
 wait
 
-wget http://h2o-release.s3.amazonaws.com/sparkling-water/${SparklingBranch2}/${h2oBuild2}/sparkling-water-${version2}.${h2oBuild2}.zip &
+wget https://h2ostore.blob.core.windows.net/sparkling-water/2.0/sparkling-water-2.0.cloud.zip &
 wait
 
 echo "Unzipping sparkling-water-${version}.${h2oBuild}.zip ..."
