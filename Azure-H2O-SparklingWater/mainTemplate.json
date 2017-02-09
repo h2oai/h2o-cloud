@@ -188,7 +188,7 @@
               "httpsEndpoints": [
                 {  
                 "subDomainSuffix": "h2o",  
-                "destinationPort": 54321,  
+                "destinationPort": 80,  
                 "accessModes": ["WebPage"]  
                 }
               ],
