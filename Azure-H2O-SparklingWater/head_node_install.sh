@@ -38,21 +38,21 @@ echo "Downloading Sparkling Water version ${version}.${h2oBuild} ..."
 wget http://h2o-release.s3.amazonaws.com/sparkling-water/${SparklingBranch}/${h2oBuild}/sparkling-water-${version}.${h2oBuild}.zip &
 wait
 
-wget https://h2ostore.blob.core.windows.net/sparkling-water/2.0/sparkling-water-2.0.cloud.zip &
+wget http://h2o-release.s3.amazonaws.com/sparkling-water/${SparklingBranch2}/${h2oBuild2}/sparkling-water-${version2}.${h2oBuild2}.zip &
 wait
 
 echo "Unzipping sparkling-water-${version}.${h2oBuild}.zip ..."
 unzip -o sparkling-water-${version}.${h2oBuild}.zip 1> /dev/null &
 wait
 
-unzip -o sparkling-water-${version2}.cloud.zip 1> /dev/null &
+unzip -o sparkling-water-${version2}.${h2oBuild2}.zip 1> /dev/null &
 wait
 
 echo "Rename jar and Egg files"
 mv /home/h2o/sparkling-water-${version}.${h2oBuild}/py/dist/*.egg /home/h2o/sparkling-water-${version}.${h2oBuild}/py/dist/pySparkling-${version}.egg
 
-mv /home/h2o/sparkling-water-${version2}.cloud/assembly/build/libs/*.jar /home/h2o/sparkling-water-${version2}.cloud/assembly/build/libs/sparkling-water-assembly-2-0-all.jar
-mv /home/h2o/sparkling-water-${version2}.cloud/py/build/dist/*.egg /home/h2o/sparkling-water-${version2}.cloud/py/build/dist/pySparkling-${version2}.egg
+mv /home/h2o/sparkling-water-${version2}.${h2oBuild2}/assembly/build/libs/*.jar /home/h2o/sparkling-water-${version2}.${h2oBuild2}/assembly/build/libs/sparkling-water-assembly-2-0-all.jar
+mv /home/h2o/sparkling-water-${version2}.${h2oBuild2}/py/build/dist/*.egg /home/h2o/sparkling-water-${version2}.${h2oBuild2}/py/build/dist/pySparkling-${version2}.egg
 
 echo "Creating SPARKLING_HOME env ..."
 export SPARKLING_HOME="/home/h2o/sparkling-water-${version2}.${h2oBuild2}"
@@ -62,11 +62,11 @@ echo "Copying Sparkling folder to default storage account ... "
 hdfs dfs -mkdir -p "/H2O-Sparkling-Water-files"
 hdfs dfs -put -f /home/h2o/sparkling-water-${version}.${h2oBuild}/py/dist/*.egg /H2O-Sparkling-Water-files/
 
-hdfs dfs -put -f /home/h2o/sparkling-water-${version2}.cloud/assembly/build/libs/*.jar /H2O-Sparkling-Water-files/
-hdfs dfs -put -f /home/h2o/sparkling-water-${version2}.cloud/py/build/dist/*.egg /H2O-Sparkling-Water-files/
+hdfs dfs -put -f /home/h2o/sparkling-water-${version2}.${h2oBuild2}/assembly/build/libs/*.jar /H2O-Sparkling-Water-files/
+hdfs dfs -put -f /home/h2o/sparkling-water-${version2}.${h2oBuild2}/py/build/dist/*.egg /H2O-Sparkling-Water-files/
 
 echo "Copying Notebook Examples to default Storage account Jupyter home folder ... "
-curl --silent -o 4_sentiment_sparkling.ipynb  "https://h2ostore.blob.core.windows.net/examples/Notebooks/4_sentiment_sparkling.ipynb"
+curl --silent -o Sentiment_analysis_with_Sparkling_Water.ipynb "https://h2ostore.blob.core.windows.net/examples/Notebooks/Sentiment_analysis_with_Sparkling_Water.ipynb"
 curl --silent -o ChicagoCrimeDemo.ipynb  "https://h2ostore.blob.core.windows.net/examples/Notebooks/ChicagoCrimeDemo.ipynb"
 hdfs dfs -mkdir -p "/HdiNotebooks/H2O-PySparkling-Examples"
 hdfs dfs -put -f *.ipynb /HdiNotebooks/H2O-PySparkling-Examples/
