@@ -48,6 +48,7 @@ hdfs dfs -put -f /home/h2o/sparkling-water-${version2}.${h2oBuild2}/py/build/dis
 echo "Copying Notebook Examples to default Storage account Jupyter home folder ... "
 curl --silent -o Sentiment_analysis_with_Sparkling_Water.ipynb "https://h2ostore.blob.core.windows.net/examples/Notebooks/Sentiment_analysis_with_Sparkling_Water.ipynb"
 curl --silent -o ChicagoCrimeDemo.ipynb  "https://h2ostore.blob.core.windows.net/examples/Notebooks/ChicagoCrimeDemo.ipynb"
+curl --silent -o Quickstart_Sparkling_Water.ipynb "https://h2ostore.blob.core.windows.net/examples/Notebooks/Quickstart_Sparkling_Water.ipynb"
 
 hdfs dfs -copyToLocal /HdiApplications/ScriptActionCfgs/*.cfg cluster.cfg
 
@@ -59,5 +60,6 @@ sed -i.backup -E  "s,@@FLOWURL@@,$EDGENODE_HTTPS_ENDPOINTS," *.ipynb
 
 hdfs dfs -mkdir -p "/HdiNotebooks/H2O-PySparkling-Examples"
 hdfs dfs -put -f *.ipynb /HdiNotebooks/H2O-PySparkling-Examples/
+hdfs dfs -put -f Quickstart_Sparkling_Water.ipynb /HdiNotebooks/
 
 echo "Success"
