@@ -60,6 +60,7 @@ echo "Downloading cool notebooks.."
 cd /home/$2/notebooks
 curl --silent -o H2O_pydemo_tutorial_breast_cancer_classification.ipynb "https://raw.githubusercontent.com/h2oai/h2o-3/master/h2o-py/demos/H2O_tutorial_breast_cancer_classification.ipynb"
 curl --silent -o H2O_rdemo_tutorial_eeg_eyestate.ipynb "https://raw.githubusercontent.com/h2oai/h2o-3/master/h2o-r/demos/rdemo.tutorial.eeg.eyestate.ipynb"
+curl --silent -o H2O_pydemo_tutorial_eeg_eyestate.ipynb  "https://raw.githubusercontent.com/h2oai/h2o-3/master/h2o-py/demos/H2O_tutorial_eeg_eyestate.ipynb"
 
 echo "Install RStudio" 
 wget https://download2.rstudio.org/rstudio-server-rhel-1.0.44-x86_64.rpm
