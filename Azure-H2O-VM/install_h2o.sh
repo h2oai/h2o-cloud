@@ -38,13 +38,12 @@ if [ ! -f $h2oLog ]; then
         R --slave -e 'install.packages("h2o", type="source", repos=(c("https://s3.amazonaws.com/h2o-release/h2o/'${h2oBranch}'/'${h2oBuild}'/R")))'
 
 
-        echo "Installing H2O for Python..."
-        /opt/anaconda3/bin/pip install https://s3.amazonaws.com/h2o-release/h2o/${h2oBranch}/${h2oBuild}/Python/h2o-${h2oVersion}-py2.py3-none-any.whl >> $h$
-
+        echo "Installing H2O for Python..."        
+        /opt/anaconda3/bin/pip install https://s3.amazonaws.com/h2o-release/h2o/${h2oBranch}/${h2oBuild}/Python/h2o-${h2oVersion}-py2.py3-none-any.whl
 
 
         echo "Installing H2O for Python 2.7..."
-        /opt/anaconda3/envs/py27/bin/pip install https://s3.amazonaws.com/h2o-release/h2o/${h2oBranch}/${h2oBuild}/Python/h2o-${h2oVersion}-py2.py3-none-any$
+        /opt/anaconda3/envs/py27/bin/pip install https://s3.amazonaws.com/h2o-release/h2o/${h2oBranch}/${h2oBuild}/Python/h2o-${h2oVersion}-py2.py3-none-any.whl
 
 
         echo "Success!! " >> $h2oLog
