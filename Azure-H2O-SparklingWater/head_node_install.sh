@@ -20,30 +20,41 @@ wait
 
 # Adjust based on the build of H2O you want to download. (TODO)
 
-version2=2.0
-SparklingBranch2=rel-${version2}
-h2oBuild2=5
 
-wget http://h2o-release.s3.amazonaws.com/sparkling-water/${SparklingBranch2}/${h2oBuild2}/sparkling-water-${version2}.${h2oBuild2}.zip &
+SPARK_VER=$(cat temp.outfile|grep "  version"|sed 's/^.*\(version \)//g' | cut -c 1-3)
+
+if [ $SPARK_VER == "2.1" ]; then
+version=2.1
+h2oBuild=3
+SparklingBranch=rel-${version}
+else
+version=2.0
+h2oBuild=5
+SparklingBranch= rel-${version}
+fi
+
+
+
+wget http://h2o-release.s3.amazonaws.com/sparkling-water/${SparklingBranch}/${h2oBuild}/sparkling-water-${version}.${h2oBuild}.zip &
 wait
 
-unzip -o sparkling-water-${version2}.${h2oBuild2}.zip 1> /dev/null &
+unzip -o sparkling-water-${version}.${h2oBuild}.zip 1> /dev/null &
 wait
 
 echo "Rename jar and Egg files"
-mv /home/h2o/sparkling-water-${version2}.${h2oBuild2}/assembly/build/libs/*.jar /home/h2o/sparkling-water-${version2}.${h2oBuild2}/assembly/build/libs/sparkling-water-assembly-2-0-all.jar
-mv /home/h2o/sparkling-water-${version2}.${h2oBuild2}/py/build/dist/*.egg /home/h2o/sparkling-water-${version2}.${h2oBuild2}/py/build/dist/pySparkling-${version2}.egg
+mv /home/h2o/sparkling-water-${version}.${h2oBuild}/assembly/build/libs/*.jar /home/h2o/sparkling-water-${version}.${h2oBuild}/assembly/build/libs/sparkling-water-assembly-all.jar
+mv /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/*.egg /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/pySparkling-${version}.egg
 
 echo "Creating SPARKLING_HOME env ..."
-export SPARKLING_HOME="/home/h2o/sparkling-water-${version2}.${h2oBuild2}"
+export SPARKLING_HOME="/home/h2o/sparkling-water-${version}.${h2oBuild}"
 export MASTER="yarn-client"
 export PYTHON_EGG_CACHE="~/"
 
 echo "Copying Sparkling folder to default storage account ... "
 hdfs dfs -mkdir -p "/H2O-Sparkling-Water-files"
 
-hdfs dfs -put -f /home/h2o/sparkling-water-${version2}.${h2oBuild2}/assembly/build/libs/*.jar /H2O-Sparkling-Water-files/
-hdfs dfs -put -f /home/h2o/sparkling-water-${version2}.${h2oBuild2}/py/build/dist/*.egg /H2O-Sparkling-Water-files/
+hdfs dfs -put -f /home/h2o/sparkling-water-${version}.${h2oBuild}/assembly/build/libs/*.jar /H2O-Sparkling-Water-files/
+hdfs dfs -put -f /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/*.egg /H2O-Sparkling-Water-files/
 
 echo "Copying Notebook Examples to default Storage account Jupyter home folder ... "
 curl --silent -o Sentiment_analysis_with_Sparkling_Water.ipynb "https://h2ostore.blob.core.windows.net/examples/Notebooks/Sentiment_analysis_with_Sparkling_Water.ipynb"

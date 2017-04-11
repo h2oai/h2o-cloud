@@ -4,6 +4,10 @@
     "clusterFilters": {
         "types": [ "Spark" ],
         "tiers": [ "Standard", "Premium" ],
-        "versions": [ "3.5" ]
+      "versions": [ "3.5", "3.6" ],
+      "componentVersions": {        
+        "Spark":["2.0", "2.1"] 
+      }
+
     }    
 }
