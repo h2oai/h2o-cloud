@@ -36,6 +36,7 @@ if [ ! -f $h2oLog ]; then
         
         echo "Installing H2O for R"
         R --slave -e 'install.packages("h2o", type="source", repos=(c("https://s3.amazonaws.com/h2o-release/h2o/'${h2oBranch}'/'${h2oBuild}'/R")))'
+        R --slave -e "IRkernel::installspec(user = FALSE)"
 
 
         echo "Installing H2O for Python..."        
