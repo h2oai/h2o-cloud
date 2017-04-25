@@ -18,8 +18,7 @@ wait
 #Scikit Learn on the nodes
 /usr/bin/anaconda/bin/pip install -U scikit-learn
 
-# Adjust based on the build of H2O you want to download. (TODO)
-
+# Adjust based on the build of H2O you want to download. 
 
 SPARK_VER=$(cat temp.outfile|grep "  version"|sed 's/^.*\(version \)//g' | cut -c 1-3)
 
@@ -32,7 +31,6 @@ version=2.0
 h2oBuild=5
 SparklingBranch= rel-${version}
 fi
-
 
 
 wget http://h2o-release.s3.amazonaws.com/sparkling-water/${SparklingBranch}/${h2oBuild}/sparkling-water-${version}.${h2oBuild}.zip &
@@ -61,12 +59,37 @@ curl --silent -o Sentiment_analysis_with_Sparkling_Water.ipynb "https://h2ostore
 curl --silent -o ChicagoCrimeDemo.ipynb  "https://h2ostore.blob.core.windows.net/examples/Notebooks/ChicagoCrimeDemo.ipynb"
 curl --silent -o Quickstart_Sparkling_Water.ipynb "https://h2ostore.blob.core.windows.net/examples/Notebooks/Quickstart_Sparkling_Water.ipynb"
 
-hdfs dfs -copyToLocal /HdiApplications/ScriptActionCfgs/*.cfg cluster.cfg
 
-. cluster.cfg
-echo $EDGENODE_HTTPS_ENDPOINTS
+echo "Get ClusterName, UserID and EdgeNode DNS"
+USERID=$(echo -e "import hdinsight_common.Constants as Constants\nprint Constants.AMBARI_WATCHDOG_USERNAME" | python)
+
+echo "USERID=$USERID"
+
+PASSWD=$(echo -e "import hdinsight_common.ClusterManifestParser as ClusterManifestParser\nimport hdinsight_common.Constants as Constants\nimport base64\nbase64pwd = ClusterManifestParser.parse_local_manifest().ambari_users.usersmap[Constants.AMBARI_WATCHDOG_USERNAME].password\nprint base64.b64decode(base64pwd)" | python)
+
+curl -o parse_dns.py "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/parse_dns.py"
+curl -u $USERID:$PASSWD https://jorge-dev.azurehdinsight.net/api/v1/clusters/jorge-dev/hosts | python  parse_dns.py 1> tmpfile.txt
+EDGENODE_DNS=$(cat tmpfile.txt)
+rm tmpfile.txt
+
+fullHostName=$(hostname -f)
+    echo "fullHostName=$fullHostName"
+    CLUSTERNAME=$(sed -n -e 's/.*\.\(.*\)-ssh.*/\1/p' <<< $fullHostName)
+    if [ -z "$CLUSTERNAME" ]; then
+        CLUSTERNAME=$(echo -e "import hdinsight_common.ClusterManifestParser as ClusterManifestParser\nprint ClusterManifestParser.parse_local_manifest().deployment.cluster_name" | python)
+        if [ $? -ne 0 ]; then
+            echo "[ERROR] Cannot determine cluster name. Exiting!"
+            exit 133
+        fi
+    fi
+echo "Cluster Name=$CLUSTERNAME"
+
+EDGENODE_HOSTS="https://$CLUSTERNAME-h2o.apps.azurehdinsight.net:443"
+
+
+echo $EDGENODE_DNS
 sed -i.backup -E  "s/@@IPADDRESS@@/$EDGENODE_HOSTS/" *.ipynb 
-sed -i.backup -E  "s,@@FLOWURL@@,$EDGENODE_HTTPS_ENDPOINTS," *.ipynb
+sed -i.backup -E  "s,@@FLOWURL@@,$EDGENODE_DNS," *.ipynb
 
 
 hdfs dfs -mkdir -p "/HdiNotebooks/H2O-PySparkling-Examples"
