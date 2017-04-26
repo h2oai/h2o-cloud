@@ -19,8 +19,9 @@ wait
 /usr/bin/anaconda/bin/pip install -U scikit-learn
 
 # Adjust based on the build of H2O you want to download. 
-
+spark-submit --version &>temp.outfile
 SPARK_VER=$(cat temp.outfile|grep "  version"|sed 's/^.*\(version \)//g' | cut -c 1-3)
+rm temp.outfile
 
 if [ $SPARK_VER == "2.1" ]; then
 version=2.1
