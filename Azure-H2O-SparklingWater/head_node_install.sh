@@ -69,10 +69,6 @@ echo "USERID=$USERID"
 
 PASSWD=$(echo -e "import hdinsight_common.ClusterManifestParser as ClusterManifestParser\nimport hdinsight_common.Constants as Constants\nimport base64\nbase64pwd = ClusterManifestParser.parse_local_manifest().ambari_users.usersmap[Constants.AMBARI_WATCHDOG_USERNAME].password\nprint base64.b64decode(base64pwd)" | python)
 
-curl -o parse_dns.py "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/parse_dns.py"
-curl -u $USERID:$PASSWD https://jorge-dev.azurehdinsight.net/api/v1/clusters/jorge-dev/hosts | python  parse_dns.py 1> tmpfile.txt
-EDGENODE_DNS=$(cat tmpfile.txt)
-rm tmpfile.txt
 
 fullHostName=$(hostname -f)
     echo "fullHostName=$fullHostName"
@@ -85,6 +81,11 @@ fullHostName=$(hostname -f)
         fi
     fi
 echo "Cluster Name=$CLUSTERNAME"
+
+curl -o parse_dns.py "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/parse_dns.py"
+curl -u $USERID:$PASSWD https://${CLUSTERNAME}.azurehdinsight.net/api/v1/clusters/${CLUSTERNAME}/hosts | python  parse_dns.py 1> tmpfile.txt
+EDGENODE_DNS=$(cat tmpfile.txt)
+rm tmpfile.txt
 
 EDGENODE_HOSTS="https://$CLUSTERNAME-h2o.apps.azurehdinsight.net:443"
 
