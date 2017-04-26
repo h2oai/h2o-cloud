@@ -30,7 +30,7 @@ SparklingBranch=rel-${version}
 else
 version=2.0
 h2oBuild=5
-SparklingBranch= rel-${version}
+SparklingBranch=rel-${version}
 fi
 
 
