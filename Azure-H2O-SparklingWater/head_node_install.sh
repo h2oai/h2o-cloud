@@ -83,16 +83,17 @@ fullHostName=$(hostname -f)
 echo "Cluster Name=$CLUSTERNAME"
 
 curl -o parse_dns.py "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/parse_dns.py"
+echo https://${CLUSTERNAME}.azurehdinsight.net/api/v1/clusters/${CLUSTERNAME}/hosts
 curl -u $USERID:$PASSWD https://${CLUSTERNAME}.azurehdinsight.net/api/v1/clusters/${CLUSTERNAME}/hosts | python  parse_dns.py 1> tmpfile.txt
 EDGENODE_DNS=$(cat tmpfile.txt)
 rm tmpfile.txt
 
-EDGENODE_HOSTS="https://$CLUSTERNAME-h2o.apps.azurehdinsight.net:443"
+EDGENODE_URL="https://$CLUSTERNAME-h2o.apps.azurehdinsight.net:443"
 
 
 echo $EDGENODE_DNS
-sed -i.backup -E  "s/@@IPADDRESS@@/$EDGENODE_HOSTS/" *.ipynb 
-sed -i.backup -E  "s,@@FLOWURL@@,$EDGENODE_DNS," *.ipynb
+sed -i.backup -E  "s,@@IPADDRESS@@,$EDGENODE_DNS," *.ipynb 
+sed -i.backup -E  "s,@@FLOWURL@@,$EDGENODE_URL," *.ipynb
 
 
 hdfs dfs -mkdir -p "/HdiNotebooks/H2O-PySparkling-Examples"
