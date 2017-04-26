@@ -3,7 +3,7 @@
 set -e
 
 echo "Cleaning ..."
-rm -rf /etc/h2o
+rm -rf /home/h2o
 echo " Making h2o folder"
 mkdir -p /home/h2o
 echo "Changing to h2o folder ..."
