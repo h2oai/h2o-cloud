@@ -24,6 +24,8 @@ spark-submit --version &>temp.outfile
 SPARK_VER=$(cat temp.outfile|grep "  version"|sed 's/^.*\(version \)//g' | cut -c 1-3)
 rm temp.outfile
 
+echo "SPARK VERSION=$SPARK_VER"
+
 if [ $SPARK_VER == "2.1" ]; then
 version=2.1
 h2oBuild=3
