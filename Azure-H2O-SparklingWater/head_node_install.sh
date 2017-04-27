@@ -26,13 +26,13 @@ rm temp.outfile
 
 echo "SPARK VERSION=$SPARK_VER"
 
-if [ $SPARK_VER == "2.1" ]; then
-version=2.1
-h2oBuild=3
-SparklingBranch=rel-${version}
-else
+if [ $SPARK_VER == "2.0" ]; then
 version=2.0
 h2oBuild=5
+SparklingBranch=rel-${version}
+else
+version=2.1
+h2oBuild=3
 SparklingBranch=rel-${version}
 fi
 
