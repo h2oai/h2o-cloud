@@ -2,11 +2,11 @@
 # ARGS: $1=username $2=SparkVersion
 set -e
 
-echo "Cleaning ..."
+echo "\n Cleaning ..."
 rm -rf /home/h2o
-echo " Making h2o folder"
+echo "\n Making h2o folder"
 mkdir -p /home/h2o
-echo "Changing to h2o folder ..."
+echo "\n Changing to h2o folder ..."
 cd /home/h2o/
 wait 
 
@@ -34,6 +34,7 @@ h2oBuild=5
 SparklingBranch=rel-${version}
 fi
 
+echo "\n Installing sparkling water version $version build $h2oBuild "
 
 wget http://h2o-release.s3.amazonaws.com/sparkling-water/${SparklingBranch}/${h2oBuild}/sparkling-water-${version}.${h2oBuild}.zip &
 wait
@@ -41,28 +42,28 @@ wait
 unzip -o sparkling-water-${version}.${h2oBuild}.zip 1> /dev/null &
 wait
 
-echo "Rename jar and Egg files"
+echo "\n Rename jar and Egg files"
 mv /home/h2o/sparkling-water-${version}.${h2oBuild}/assembly/build/libs/*.jar /home/h2o/sparkling-water-${version}.${h2oBuild}/assembly/build/libs/sparkling-water-assembly-all.jar
-mv /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/*.egg /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/pySparkling-${version}.egg
+mv /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/*.egg /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/pySparkling.egg
 
-echo "Creating SPARKLING_HOME env ..."
+echo "\n Creating SPARKLING_HOME env ..."
 export SPARKLING_HOME="/home/h2o/sparkling-water-${version}.${h2oBuild}"
 export MASTER="yarn-client"
 export PYTHON_EGG_CACHE="~/"
 
-echo "Copying Sparkling folder to default storage account ... "
+echo "\n Copying Sparkling folder to default storage account ... "
 hdfs dfs -mkdir -p "/H2O-Sparkling-Water-files"
 
 hdfs dfs -put -f /home/h2o/sparkling-water-${version}.${h2oBuild}/assembly/build/libs/*.jar /H2O-Sparkling-Water-files/
 hdfs dfs -put -f /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/*.egg /H2O-Sparkling-Water-files/
 
-echo "Copying Notebook Examples to default Storage account Jupyter home folder ... "
-curl --silent -o Sentiment_analysis_with_Sparkling_Water.ipynb "https://h2ostore.blob.core.windows.net/examples/Notebooks/Sentiment_analysis_with_Sparkling_Water.ipynb"
-curl --silent -o ChicagoCrimeDemo.ipynb  "https://h2ostore.blob.core.windows.net/examples/Notebooks/ChicagoCrimeDemo.ipynb"
-curl --silent -o Quickstart_Sparkling_Water.ipynb "https://h2ostore.blob.core.windows.net/examples/Notebooks/Quickstart_Sparkling_Water.ipynb"
+echo "\n Copying Notebook Examples to default Storage account Jupyter home folder ... "
+curl --silent -o Sentiment_analysis_with_Sparkling_Water.ipynb "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/Notebooks/Sentiment_analysis_with_Sparkling_Water.ipynb"
+curl --silent -o ChicagoCrimeDemo.ipynb  "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/Notebooks/ChicagoCrimeDemo.ipynb"
+curl --silent -o Quickstart_Sparkling_Water.ipynb "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/Notebooks/Quickstart_Sparkling_Water.ipynb"
 
 
-echo "Get ClusterName, UserID and EdgeNode DNS"
+echo "\n Get ClusterName, UserID and EdgeNode DNS"
 USERID=$(echo -e "import hdinsight_common.Constants as Constants\nprint Constants.AMBARI_WATCHDOG_USERNAME" | python)
 
 echo "USERID=$USERID"
@@ -100,4 +101,4 @@ hdfs dfs -mkdir -p "/HdiNotebooks/H2O-PySparkling-Examples"
 hdfs dfs -put -f *.ipynb /HdiNotebooks/H2O-PySparkling-Examples/
 hdfs dfs -put -f Quickstart_Sparkling_Water.ipynb /HdiNotebooks/
 
-echo "Success"
+echo "\n Success"
