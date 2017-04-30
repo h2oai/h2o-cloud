@@ -92,6 +92,8 @@ export SPARKLING_HOME="/home/h2o/sparkling-water-${version}.${h2oBuild}"
 export MASTER="yarn-client"
 export PYTHON_EGG_CACHE="~/"
 
+
+
 echo -e "\n Copying Sparkling folder to default storage account ... "
 hdfs dfs -mkdir -p "/H2O-Sparkling-Water-files"
 
@@ -113,5 +115,8 @@ sed -i.backup -E  "s,@@FLOWURL@@,$EDGENODE_URL," *.ipynb
 hdfs dfs -mkdir -p "/HdiNotebooks/H2O-PySparkling-Examples"
 hdfs dfs -put -f *.ipynb /HdiNotebooks/H2O-PySparkling-Examples/
 hdfs dfs -put -f Quickstart_Sparkling_Water.ipynb /HdiNotebooks/
+
+mkdir -p /var/lib/jupyter
+cp *.ipynb /var/lib/jupyter
 
 echo "\n Success"
