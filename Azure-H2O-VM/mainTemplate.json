@@ -51,10 +51,10 @@
         
     },
     "variables": {
-        "vmName": "H2ODSVM",
-        "imagePublisher": "microsoft-ads",
-        "imageOffer": "linux-data-science-vm",
-        "imageSKU": "linuxdsvm",
+        "vmName": "H2OVM",
+        "imagePublisher": "h2o-ai",
+        "imageOffer": "h2o-vm",
+        "imageSKU": "h2o-cloud",
         "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'dsvm')]",
         "availabilitySetName": "H2OdsvmAvSet",
         "networkSecurityGroupName": "H2OdsvmNSG",
@@ -234,7 +234,7 @@
                         "publisher": "[variables('imagePublisher')]",
                         "offer": "[variables('imageOffer')]",
                         "sku": "[variables('imageSKU')]",
-                        "version": "1.3.1"
+                        "version": "latest"
                     },
                     "osDisk": {
                         "name": "osdisk",
