@@ -44,9 +44,9 @@
   "variables": {
     "vmName": "H2OVM",
     "vmCount": 1,
-    "imagePublisher": "h2o-ai",
-    "imageOffer": "h2o-vm",
-    "imageSKU": "h2o-cloud",
+    "imagePublisher": "microsoft-ads",
+    "imageOffer": "linux-data-science-vm",
+    "imageSKU": "linuxdsvm",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'dsvm')]",
     "availabilitySetName": "H2OdsvmAvSet",
     "networkSecurityGroupName": "H2OdsvmNSG",
@@ -235,7 +235,17 @@
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
-          }
+          },
+          "dataDisks": [
+            {
+              "name": "[concat(variables('vmName'), '-', copyIndex(), '-disk-1')]",
+              "createOption": "fromImage",
+              "lun": 0,
+              "vhd": {
+                "uri": "[concat(concat(reference(resourceId(resourceGroup().name, 'Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-06-15').primaryEndpoints['blob'], 'vhds/'), uniqueString(resourceGroup().id), '-', variables('vmName'), copyindex(), '-disk-1', '.vhd')]"
+              }
+            }
+          ]        
         },
         "networkProfile": {
           "networkInterfaces": [
