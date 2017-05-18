@@ -17,15 +17,13 @@
     "vmSize": {
       "type": "string",
       "allowedValues": [
-        "Standard_DS1_v2",
-        "Standard_DS2_v2",
-        "Standard_DS3_v2",
-        "Standard_DS4_v2",
-        "Standard_DS5_v2",
-        "Standard_DS11_v2",
-        "Standard_DS12_v2",
-        "Standard_DS13_v2",
-        "Standard_DS14_v2"
+        "Standard_NV6",
+        "Standard_NV12",
+        "Standard_NV24",
+        "Standard_NC6",
+        "Standard_NC12",
+        "Standard_NC24",
+        "Standard_NC24R"        
       ],
       "metadata": {
         "description": "Size of the VM"
@@ -33,12 +31,12 @@
     },    
     "storageAccountType": {
       "type": "string",
-      "defaultValue": "Premium_LRS",
+      "defaultValue": "Standard_LRS",
       "allowedValues": [
-        "Premium_LRS"
+        "Standard_LRS"
       ],
       "metadata": {
-        "description": "Storage Account type. DS-series VMs must be deployed in Premium_LRS in order to have an SSD OS disk."
+        "description": "Storage Account type. "
       }
     }
 
