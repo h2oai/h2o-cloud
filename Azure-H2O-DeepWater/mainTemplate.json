@@ -45,7 +45,7 @@
   },
   "variables": {
     "vmName": "H2OVM",
-    "vmCount":  1,
+    "vmCount": 1,
     "imagePublisher": "h2o-ai",
     "imageOffer": "h2o-vm",
     "imageSKU": "h2o-cloud",
@@ -60,7 +60,7 @@
     "subnet1Prefix": "10.0.0.0/24",
     "nicName": "NIC",
     "subnet1Ref": "[concat(variables('vnetID'),'/subnets/', variables('subnet1Name'))]",
-    "customScriptFilePath": "https://h2ostore.blob.core.windows.net/marketplacescripts/H2OVM/install_extras.sh",
+    "customScriptFilePath": "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-DeepWater/install_deepwater.sh",
     "customScriptCommandToExecute": "sh install_extras.sh",
     "vmExtensionName": "H2OdsvmExtension",
     "domainNameLabel": "[concat('h2odsvm-', uniqueString(resourceGroup().id))]"
