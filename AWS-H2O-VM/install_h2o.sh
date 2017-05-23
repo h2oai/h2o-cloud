@@ -35,13 +35,14 @@ if [ ! -f $h2oLog ]; then
         wait
         
         echo "Installing H2O for R"
-        R -e "IRkernel::installspec(user = FALSE)" 
-        R --slave -e 'install.packages("h2o", type="source", repos=(c("https://s3.amazonaws.com/h2o-release/h2o/'${h2oBranch}'/'${h2oBuild}'/R")))'
+        /usr/bin/R -e "IRkernel::installspec(user = FALSE)" 
+        /usr/bin/R --slave -e 'install.packages("h2o", type="source", repos=(c("https://s3.amazonaws.com/h2o-release/h2o/'${h2oBranch}'/'${h2oBuild}'/R")))'
 
 
 
         echo "Installing H2O for Python..."        
-        pip install https://s3.amazonaws.com/h2o-release/h2o/${h2oBranch}/${h2oBuild}/Python/h2o-${h2oVersion}-py2.py3-none-any.whl
+        /usr/local/bin/pip install https://s3.amazonaws.com/h2o-release/h2o/${h2oBranch}/${h2oBuild}/Python/h2o-${h2oVersion}-py2.py3-none-any.whl
+        /usr/local/bin/pip3 install https://s3.amazonaws.com/h2o-release/h2o/${h2oBranch}/${h2oBuild}/Python/h2o-${h2oVersion}-py2.py3-none-any.whl
         
 
         echo "Success!! " >> $h2oLog
