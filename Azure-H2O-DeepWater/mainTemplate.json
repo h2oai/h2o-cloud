@@ -59,7 +59,7 @@
     "nicName": "NIC",
     "subnet1Ref": "[concat(variables('vnetID'),'/subnets/', variables('subnet1Name'))]",
     "customScriptFilePath": "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-DeepWater/install_deepwater.sh",
-    "customScriptCommandToExecute": "sh install_deepwater.sh",
+    "customScriptCommandToExecute": "nvidia-docker run -d -p 54321:54321  --net host -v $PWD:/host opsh2oai/h2o-deepwater java -jar /opt/h2o.jar",
     "vmExtensionName": "H2OdsvmExtension",
     "domainNameLabel": "[concat('h2odsvm-', uniqueString(resourceGroup().id))]"
 
