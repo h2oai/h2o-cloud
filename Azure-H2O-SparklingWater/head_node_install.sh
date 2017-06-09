@@ -11,7 +11,7 @@ cd /home/h2o/
 wait 
 
 #Libraries needed on the worker roles in order to get pysparkling working
-/usr/bin/anaconda/bin/pip install -U requests
+#/usr/bin/anaconda/bin/pip install -U requests
 /usr/bin/anaconda/bin/pip install -U tabulate
 /usr/bin/anaconda/bin/pip install -U future
 /usr/bin/anaconda/bin/pip install -U six
