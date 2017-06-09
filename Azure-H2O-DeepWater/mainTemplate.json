@@ -210,13 +210,13 @@
               },
               "subnet": {
                 "id": "[variables('subnet1Ref')]"
-              },
-              "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(variables('networkSecurityGroupName'), copyIndex()))]"
               }
             }
           }
-        ]
+        ],
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(variables('networkSecurityGroupName'), copyIndex()))]"
+        }
       }
     },
     {
