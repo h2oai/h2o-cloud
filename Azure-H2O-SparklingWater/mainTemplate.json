@@ -150,50 +150,50 @@
         {
             "name": "[concat(parameters('clusterName'),'/', 'h2o-sparklingwater')]",
             "type": "Microsoft.HDInsight/clusters/applications",
-            "apiVersion": "[variables('clusterApiVersion')]",            
-            "properties": {
-                "marketPlaceIdentifier": "EmptyNode",
-                "computeProfile": {
-                    "roles": [
-                        {
-                            "name": "edgenode",
-                            "targetInstanceCount": 1,
-                            "hardwareProfile": {
-                                "vmSize": "[parameters('edgeNodeSize')]"
-                            }
-                        }
-                    ]
-                },
-                "installScriptActions": [
-                  {
-                    "name": "[concat('head-install-v0','-' ,uniquestring('h2o-sparklingwater'))]",
-                    "uri": "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/head_node_install.sh",
-                    "parameters": "[concat(parameters('sshUserName'), ' ', parameters('sparkVersion'))]",
-                    "roles": [ "headnode" ]
-                  },
-                  {
-                    "name": "[concat('worker-install-v0','-' ,uniquestring('h2o-sparklingwater'))]",
-                    "uri": "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/worker_installs.sh",
-                    "parameters": "",
-                    "roles": [ "workernode" ]
-                  },
-                  {
-                    "name": "[concat('edge-install-v0','-' ,uniquestring('h2o-sparklingwater'))]",
-                    "uri": "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/edgenodeinstall.sh",
-                    "parameters": "",
-                    "roles": [ "edgenode" ]
+            "apiVersion": "[variables('clusterApiVersion')]",
+          "properties": {
+            "marketPlaceIdentifier": "EmptyNode",
+            "computeProfile": {
+              "roles": [
+                {
+                  "name": "edgenode",
+                  "targetInstanceCount": 1,
+                  "hardwareProfile": {
+                    "vmSize": "[parameters('edgeNodeSize')]"
                   }
-                ],
-                "uninstallScriptActions": [ ],
-              "httpsEndpoints": [
-                {  
-                "subDomainSuffix": "h2o",  
-                "destinationPort": 80,  
-                "accessModes": ["WebPage"]  
                 }
-              ],
-                "applicationType": "CustomApplication"
-            }
+              ]
+            },
+            "installScriptActions": [
+              {
+                "name": "[concat('head-install-v0','-' ,uniquestring('h2o-sparklingwater'))]",
+                "uri": "https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/head_node_install.sh",
+                "parameters": "[concat(parameters('sshUserName'), ' ', parameters('sparkVersion'))]",
+                "roles": [ "headnode" ]
+              },
+              {
+                "name": "[concat('worker-install-v0','-' ,uniquestring('h2o-sparklingwater'))]",
+                "uri": "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/worker_installs.sh",
+                "parameters": "",
+                "roles": [ "workernode" ]
+              },
+              {
+                "name": "[concat('edge-install-v0','-' ,uniquestring('h2o-sparklingwater'))]",
+                "uri": "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/edgenodeinstall.sh",
+                "parameters": "",
+                "roles": [ "edgenode" ]
+              }
+            ],
+            "uninstallScriptActions": [],
+            "httpsEndpoints": [
+              {
+                "subDomainSuffix": "h2o",
+                "destinationPort": 80,
+                "accessModes": [ "WebPage" ]
+              }
+            ],
+            "applicationType": "CustomApplication"
+          }
         }
     ]
         

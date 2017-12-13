@@ -61,11 +61,11 @@ ParseSparkVersion(){
 
 	if [ $INSTALLED_SPARK == "2.0" ]; then
 	version=2.0
-	h2oBuild=5
+	h2oBuild=19
 	SparklingBranch=rel-${version}
 	else
 	version=2.1
-	h2oBuild=3
+	h2oBuild=18
 	SparklingBranch=rel-${version}
 	fi
 
@@ -85,7 +85,7 @@ wait
 
 echo -e "\n Rename jar and Egg files"
 mv /home/h2o/sparkling-water-${version}.${h2oBuild}/assembly/build/libs/*.jar /home/h2o/sparkling-water-${version}.${h2oBuild}/assembly/build/libs/sparkling-water-assembly-all.jar
-mv /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/*.egg /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/pySparkling.egg
+mv /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/*.zip /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/pySparkling.zip
 
 echo -e "\n Creating SPARKLING_HOME env ..."
 export SPARKLING_HOME="/home/h2o/sparkling-water-${version}.${h2oBuild}"
@@ -98,7 +98,7 @@ echo -e "\n Copying Sparkling folder to default storage account ... "
 hdfs dfs -mkdir -p "/H2O-Sparkling-Water-files"
 
 hdfs dfs -put -f /home/h2o/sparkling-water-${version}.${h2oBuild}/assembly/build/libs/*.jar /H2O-Sparkling-Water-files/
-hdfs dfs -put -f /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/*.egg /H2O-Sparkling-Water-files/
+hdfs dfs -put -f /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/*.zip /H2O-Sparkling-Water-files/
 
 echo -e "\n Copying Notebook Examples to default Storage account Jupyter home folder ... "
 curl --silent -o Sentiment_analysis_with_Sparkling_Water.ipynb "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/Notebooks/Sentiment_analysis_with_Sparkling_Water.ipynb"
