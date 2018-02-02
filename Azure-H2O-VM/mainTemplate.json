@@ -55,10 +55,10 @@
         "imagePublisher": "h2o-ai",
         "imageOffer": "h2o-vm",
         "imageSKU": "h2o-cloud",
-        "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'dsvm')]",
-        "availabilitySetName": "[concat('H2OdsvmAvSet', uniquestring(resourceGroup().id))]",
-        "networkSecurityGroupName": "[concat('H2OdsvmNSG', uniquestring(resourceGroup().id))]",
-        "virtualNetworkName": "[concat('H2OVNET', uniquestring(resourceGroup().id))]",
+        "storageAccountName": "[concat(uniquestring(resourceGroup().id, deployment().name), 'dsvm')]",
+        "availabilitySetName": "[concat('H2OdsvmAvSet', uniquestring(resourceGroup().id, deployment().name))]",
+        "networkSecurityGroupName": "[concat('H2OdsvmNSG', uniquestring(resourceGroup().id, deployment().name))]",
+        "virtualNetworkName": "[concat('H2OVNET', uniquestring(resourceGroup().id, deployment().name))]",
         "vnetAddressPrefix": "10.0.0.0/16",
         "publicIPAddressType": "Dynamic",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
@@ -239,7 +239,7 @@
                     "osDisk": {
                         "name": "osdisk",
                         "vhd": {
-                            "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/', uniqueString(resourceGroup().id), '-', variables('vmName'), copyindex(), '.vhd')]"
+                            "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.windows.net/vhds/', uniqueString(resourceGroup().id, deployment().name), '-', variables('vmName'), copyindex(), '.vhd')]"
                         },
                         "caching": "ReadWrite",
                         "createOption": "FromImage"
