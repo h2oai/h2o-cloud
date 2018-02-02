@@ -4,7 +4,7 @@ set -e
 
 echo "Changing to h2o folder ..."
 cd /etc/h2o/
-wait 
+wait
 
 # Adjust based on the build of H2O you want to download.
 h2oBranch=rel-turing
@@ -58,11 +58,11 @@ curl --silent -o H2O_pydemo_tutorial_eeg_eyestate.ipynb  "https://raw.githubuser
 echo "Running h2o.jar"
 # Use 90% of RAM for H2O.
 memTotalKb=`cat /proc/meminfo | grep MemTotal | sed 's/MemTotal:[ \t]*//' | sed 's/ kB//'`
-memTotalMb=$(($memTotalKb / 1024)) 
-tmp=$(($memTotalMb * 90)) 
-xmxMb=$(($tmp / 100)) 
+memTotalMb=$(($memTotalKb / 1024))
+tmp=$(($memTotalMb * 90))
+xmxMb=$(($tmp / 100))
 
-nohup java -Xmx${xmxMb}m -jar /etc/h2o/h2o.jar -flatfile /etc/h2o/flatfile.txt 1> /dev/null 2> h2o.err &
+nohup java -XX:OnOutOfMemoryError="kill -9 %p" -Xmx${xmxMb}m -jar /etc/h2o/h2o.jar -flatfile /etc/h2o/flatfile.txt 1> /dev/null 2> h2o.err &
 
 
 echo "Success!!"
