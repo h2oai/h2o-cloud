@@ -3,6 +3,9 @@ import pyspark
 import pip
 import urllib
 import zipfile
+import subprocess
+import conda.cli
+import sys
 
 
 def main():
@@ -14,13 +17,17 @@ def main():
 	sparkling_jar = 'sparkling-water-2.1.23/assembly/build/libs/sparkling-water-assembly_2.11-2.1.23-all.jar'
 	pysparkling_file = 'sparkling-water-2.1.23/py/build/dist/h2o_pysparkling_2.1-2.1.23.zip'
 
-	pip.main(['install','h2o'])
-	pip.main(['install','h2o_pysparkling_2.1'])
+	user_folder = '/mnt/resource/hadoop/yarn/local/usercache/livy/'
+	pip.main(['install','h2o', '-t', user_folder])
+	pip.main(['install','h2o_pysparkling_2.1', '-t', user_folder])
 
+	sys.path.insert(1, user_folder)
+
+	
 	import os
 
 	os.environ["PYTHON_EGG_CACHE"] = "~/"
-	import pysparkling, h2o
+	import h2o, pysparkling
 	from h2o.automl import H2OAutoML
 
 	conf = SparkConf()\
