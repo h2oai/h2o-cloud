@@ -1,0 +1,37 @@
+{
+  "name": "HDInsightOnDemandLinkedService",
+  "properties": {
+    "type": "HDInsightOnDemand",
+    "typeProperties": {
+      "clusterType": "spark",
+      "sparkVersion": "2.1",
+      "clusterSize": 1,
+      "timeToLive": "00:15:00",
+      "hostSubscriptionId": "<Subs ID>",
+      "servicePrincipalId": "<Service Principal>",
+      "servicePrincipalKey": {
+        "value": "<Service Principal Key>",
+        "type": "SecureString"
+      },
+      "tenant": "<tenant ID>",
+      "clusterResourceGroup": "<Resource Group>",
+      "version": "3.6",
+      "osType": "Linux",
+      "clusterNamePrefix": "H2O-DataFactory-Demo",
+      "clusterSshUserName": "sshuser",
+      "clusterUserName": "admin",
+      "clusterPassword": {
+        "value": "<Secure Password>",
+        "type": "SecureString"
+      },
+      "linkedServiceName": {
+        "referenceName": "MyStorageLinkedService",
+        "type": "LinkedServiceReference"
+      }
+    },
+    "connectVia": {
+      "referenceName": "integrationRuntime1",
+      "type": "IntegrationRuntimeReference"
+    }
+  }
+}

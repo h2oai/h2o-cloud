@@ -1,4 +1,5 @@
 from pyspark import SparkContext, SparkConf
+from pyspark.sql import SparkSession
 import pyspark
 import pip
 import urllib
@@ -30,6 +31,8 @@ def main():
 	import h2o, pysparkling
 	from h2o.automl import H2OAutoML
 
+
+
 	conf = SparkConf()\
 			.setAppName("MyH2OApp")\
 			.set("spark.jars",sparkling_jar) \
@@ -39,11 +42,20 @@ def main():
 			.set("spark.task.maxFailures","1")\
 			.set("spark.yarn.am.extraJavaOption","-XX:MaxPermSize=384m")\
 			.set("spark.yarn.max.executor.failures","1")\
-			.set("maximizeResourceAllocation", "true") 
-
+			.set("maximizeResourceAllocation", "true") \
+			.set("spark.executor.memory", "10G")\
+			.set("executorMemory","10G")\
+			.set("numExecutors",'1')\
+			.set("spark.executor.cores",'4')
+	
+	#spark = SparkSession\
+    #    .builder\
+    #    .config(conf = conf) \
+    #    .getOrCreate()
+	
 	sc = SparkContext(conf=conf)
 
-	sc.stop()
+	#sc.stop()
 
 
 	h2o_context = pysparkling.H2OContext.getOrCreate(sc)

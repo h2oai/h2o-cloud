@@ -1,0 +1,24 @@
+{
+  "name": "MySparkOnDemandPipeline",
+  "properties": {
+    "activities": [
+      {
+        "name": "MySparkActivity",        
+        "type": "HDInsightSpark",
+        "linkedServiceName": {
+          "referenceName": "MyOnDemandSparkLinkedService",
+          "type": "LinkedServiceReference"
+        },
+        "typeProperties": {
+          "rootPath": "adftutorial/spark",
+          "entryFilePath": "script/H2O-ADF-Example.py",
+          "getDebugInfo": "Failure",
+          "sparkJobLinkedService": {
+            "referenceName": "MyStorageLinkedService",
+            "type": "LinkedServiceReference"
+          }
+        }
+      }
+    ]
+  }
+}
