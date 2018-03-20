@@ -13,6 +13,9 @@
           "rootPath": "adftutorial/spark",
           "entryFilePath": "script/H2O-ADF-Example.py",
           "getDebugInfo": "Failure",
+          "sparkConfig": {
+            "spark.driver.memory": "6g"
+          },
           "sparkJobLinkedService": {
             "referenceName": "MyStorageLinkedService",
             "type": "LinkedServiceReference"
