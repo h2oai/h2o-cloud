@@ -61,11 +61,11 @@ ParseSparkVersion(){
 
 	if [ $INSTALLED_SPARK == "2.0" ]; then
 	version=2.0
-	h2oBuild=19
+	h2oBuild=22
 	SparklingBranch=rel-${version}
 	else
 	version=2.1
-	h2oBuild=18
+	h2oBuild=21
 	SparklingBranch=rel-${version}
 	fi
 
