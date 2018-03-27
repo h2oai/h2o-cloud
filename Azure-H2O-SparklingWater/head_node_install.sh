@@ -41,7 +41,7 @@ checkHostNameAndSetClusterName() {
 }
 
 ParseEdgeNodeDNS(){
-	curl -o parse_dns.py "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/bin/parse_dns.py"
+	curl -o parse_dns.py "https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/parse_dns.py"
 	echo https://${CLUSTERNAME}.azurehdinsight.net/api/v1/clusters/${CLUSTERNAME}/hosts
 	curl -u $USERID:$PASSWD https://${CLUSTERNAME}.azurehdinsight.net/api/v1/clusters/${CLUSTERNAME}/hosts | python  parse_dns.py 1> tmpfile.txt
 	EDGENODE_DNS=$(cat tmpfile.txt)
@@ -49,7 +49,7 @@ ParseEdgeNodeDNS(){
 }
 
 ParseSparkVersion(){
-	curl -o parse_sparkver.py "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/bin/parse_sparkversion.py"
+	curl -o parse_sparkver.py "https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/parse_sparkversion.py"
 	echo -e https://${CLUSTERNAME}.azurehdinsight.net/api/v1/clusters/${CLUSTERNAME}/stack_versions/1/repository_versions/1
 	curl -u $USERID:$PASSWD https://${CLUSTERNAME}.azurehdinsight.net/api/v1/clusters/${CLUSTERNAME}/stack_versions/1/repository_versions/1 | python parse_sparkver.py 1> tmpfile.txt
 	INSTALLED_SPARK=$(cat tmpfile.txt)
@@ -101,9 +101,9 @@ hdfs dfs -put -f /home/h2o/sparkling-water-${version}.${h2oBuild}/assembly/build
 hdfs dfs -put -f /home/h2o/sparkling-water-${version}.${h2oBuild}/py/build/dist/*.zip /H2O-Sparkling-Water-files/
 
 echo -e "\n Copying Notebook Examples to default Storage account Jupyter home folder ... "
-curl --silent -o Sentiment_analysis_with_Sparkling_Water.ipynb "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/Notebooks/Sentiment_analysis_with_Sparkling_Water.ipynb"
-curl --silent -o ChicagoCrimeDemo.ipynb  "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/Notebooks/ChicagoCrimeDemo.ipynb"
-curl --silent -o Quickstart_Sparkling_Water.ipynb "https://raw.githubusercontent.com/h2oai/h2o-cloud/master/Azure-H2O-SparklingWater/Notebooks/Quickstart_Sparkling_Water.ipynb"
+curl --silent -o ChicagoCrimeDemo.ipynb "https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/Notebooks/ChicagoCrimeDemo.ipynb"
+curl --silent -o Quickstart_Sparkling_Water.ipynb "https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/Notebooks/Quickstart_Sparkling_Water.ipynb"
+curl --silent -o Sentiment_analysis_with_Sparkling_Water.ipynb  "https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/Notebooks/Sentiment_analysis_with_Sparkling_Water.ipynb"
 
 
 EDGENODE_URL="https://$CLUSTERNAME-h2o.apps.azurehdinsight.net:443"
