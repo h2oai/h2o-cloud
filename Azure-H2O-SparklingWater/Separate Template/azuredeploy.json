@@ -289,33 +289,40 @@
                   "parameters": ""
                 }
               ]
-            },
-            {
-              "name": "edgenode",
-              "targetInstanceCount": "1",
-              "hardwareProfile": {
-                "vmSize": "[parameters('edgeNodeSize')]"
-              },
-              "osProfile": {
-                "linuxOperatingSystemProfile": {
-                  "username": "[parameters('sshUserName')]",
-                  "password": "[parameters('sshPassword')]"
-                }
-              },
-              "virtualNetworkProfile": {
-                "id": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
-                "subnet": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName')), '/subnets/', variables('headNodeSubnetName'))]"
-              },
-              "scriptActions": [
-                {
-                  "name": "edgenode_installs",
-                  "uri": "https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/edgenodeinstall.sh",
-                  "parameters": ""
-                }
-              ]
             }
+            
           ]
         }
+      }
+    },
+    {
+      "name": "[concat(parameters('clusterName'),'/', 'h2o-sparkling-water')]",
+      "type": "Microsoft.HDInsight/clusters/applications",
+      "apiVersion": "2015-03-01-preview",
+      "dependsOn": [ "[concat('Microsoft.HDInsight/clusters/',parameters('clusterName'))]" ],
+      "properties": {
+        "marketPlaceIdentifier": "EmptyNode",
+        "computeProfile": {
+          "roles": [
+            {
+              "name": "edgenode",
+              "targetInstanceCount": 1,
+              "hardwareProfile": {
+                "vmSize": "Standard_D3"
+              }
+            }
+          ]
+        },
+        "installScriptActions": [
+          {
+            "name": "edgenode_installs",
+            "uri": "https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/edgenodeinstall.sh",
+            "roles": [ "edgenode" ]
+          }
+        ],
+        "uninstallScriptActions": [],
+        "httpsEndpoints": [],
+        "applicationType": "CustomApplication"
       }
     }
   ]
