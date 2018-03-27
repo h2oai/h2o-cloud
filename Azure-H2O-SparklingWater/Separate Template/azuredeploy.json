@@ -171,7 +171,17 @@
         }
       }
     },
-
+    {
+      "name": "[parameters('storageAccountName')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "East US 2",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [],
+      "tags": {},
+      "properties": {
+        "accountType": "Standard_LRS"
+      }
+    },
     {
       "name": "[variables('virtualNetworkName')]",
       "type": "Microsoft.Network/virtualNetworks",
