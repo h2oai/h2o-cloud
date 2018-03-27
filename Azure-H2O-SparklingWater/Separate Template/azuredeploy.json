@@ -201,7 +201,6 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "[variables('clusterApiVersion')]",
       "dependsOn": [
-        "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
       ],
       "tags": {},
