@@ -34,6 +34,12 @@
     },
     "sshUserName": {
       "value": "sshuser"
+    },
+    "storageAccountName": {
+      "value": "storage-account"
+    },
+    "containerName": {
+      "value": "container"
     }
   }
 }
