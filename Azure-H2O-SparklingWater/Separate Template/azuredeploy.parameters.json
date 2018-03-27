@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterHeadNodeSize": {
+      "value": "Standard_D12_v2"
+    },
+    "clusterLoginUserName": {
+      "value": "admin"
+    },
+    "clusterName": {
+      "value": "h2ocluster"
+    },
+    "clusterType": {
+      "value": "spark"
+    },
+    "clusterWorkerNodeCount": {
+      "value": "3"
+    },
+    "clusterWorkerNodeSize": {
+      "value": "Standard_D13_v2"
+    },
+    "edgeNodeSize": {
+      "value": "Standard_D3"
+    },
+    "galleryPackageIdentity": {
+      "value": "H2O HDInsight App"
+    },
+    "location": {
+      "value": "East US"
+    },
+    "sparkVersion": {
+      "value": "2.0"
+    },
+    "sshUserName": {
+      "value": "sshuser"
+    }
+  }
+}
