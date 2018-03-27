@@ -260,7 +260,7 @@
               },
               "scriptActions": [
                 {
-                  "name": "headnode_installs",
+                  "name": "headnode-installs",
                   "uri": "https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/head_node_install.sh",
                   "parameters": "[concat(parameters('sshUserName'), ' ', parameters('sparkVersion'))]"
                 }
@@ -284,7 +284,7 @@
               },
               "scriptActions": [
                 {
-                  "name": "worker_installs",
+                  "name": "worker-installs",
                   "uri": "https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/worker_installs.sh",
                   "parameters": ""
                 }
@@ -315,7 +315,7 @@
         },
         "installScriptActions": [
           {
-            "name": "edgenode_installs",
+            "name": "edgenode-installs",
             "uri": "https://h2ostore.blob.core.windows.net/marketplacescripts/SparklingWater/edgenodeinstall.sh",
             "roles": [ "edgenode" ]
           }
