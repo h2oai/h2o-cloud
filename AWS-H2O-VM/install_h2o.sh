@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-h2oLog="/etc/h2o/init.log"
+h2oLog="/opt/h2oai/logs/init.log"
 if [ ! -f $h2oLog ]; then
    #Put here your initialization sentences
         mkdir -p /etc/h2o
@@ -10,7 +10,7 @@ if [ ! -f $h2oLog ]; then
         echo "Installing latest version of h2o" >>$h2oLog
 
         # Adjust based on the build of H2O you want to download.
-        h2oBranch=rel-turing
+        h2oBranch=rel-wolpert
 
         echo "Fetching latest build number for branch ${h2oBranch}..."
         curl --silent -o latest https://h2o-release.s3.amazonaws.com/h2o/${h2oBranch}/latest
