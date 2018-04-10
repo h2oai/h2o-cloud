@@ -4,8 +4,8 @@
 h2oLog="/opt/h2oai/logs/init.log"
 if [ ! -f $h2oLog ]; then
    #Put here your initialization sentences
-        mkdir -p /etc/h2o
-        cd /etc/h2o
+        mkdir -p /opt/h2o
+        cd /opt/h2o
 
         echo "Installing latest version of h2o" >>$h2oLog
 
