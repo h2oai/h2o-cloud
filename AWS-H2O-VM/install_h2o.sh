@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 h2oLog="/opt/h2oai/logs/init.log"
 if [ ! -f $h2oLog ]; then
    #Put here your initialization sentences
@@ -9,40 +8,32 @@ if [ ! -f $h2oLog ]; then
 
         echo "Installing latest version of h2o" >>$h2oLog
 
-        # Adjust based on the build of H2O you want to download.
-        h2oBranch=rel-wolpert
+        wget http://h2o-release.s3.amazonaws.com/h2o/latest_stable -O /opt/h2oai/latest
+
+        LATEST_VERSION=`cat /opt/h2oai/latest`
+        INSTALLED_VERSION=`cat /opt/h2oai/installed`
 
         echo "Fetching latest build number for branch ${h2oBranch}..."
-        curl --silent -o latest https://h2o-release.s3.amazonaws.com/h2o/${h2oBranch}/latest
-        h2oBuild=`cat latest`
-        wait
-
-        echo "Fetching full version number for build ${h2oBuild}..."
-        curl --silent -o project_version https://h2o-release.s3.amazonaws.com/h2o/${h2oBranch}/${h2oBuild}/project_version
-        h2oVersion=`cat project_version`
-        wait
-
-        echo "Downloading H2O version ${h2oVersion} ..."
-        curl --silent -o h2o-${h2oVersion}.zip https://s3.amazonaws.com/h2o-release/h2o/${h2oBranch}/${h2oBuild}/h2o-${h2oVersion}.zip &
-        wait
+        wget $LATEST_VERSION -O /opt/h2o-latest.zip    
+        wait        
 
         echo "Unzipping h2o.jar ..."
-        unzip -o h2o-${h2oVersion}.zip 1> /dev/null &
+        unzip -d /opt /opt/h2o-latest.zip 1> /dev/null &
         wait
 
         echo "Copying h2o.jar within node ..."
-        cp -f h2o-${h2oVersion}/h2o.jar . &
+        cd /opt
+        cd `find . -name 'h2o.jar' | sed 's/.\///;s/\/h2o.jar//g'`
+        cp h2o.jar /opt/h2oai/.
         wait
         
-        echo "Installing H2O for R"
-        /usr/bin/R -e "IRkernel::installspec(user = FALSE)" 
-        /usr/bin/R --slave -e 'install.packages("h2o", type="source", repos=(c("https://s3.amazonaws.com/h2o-release/h2o/'${h2oBranch}'/'${h2oBuild}'/R")))'
-
-
+        echo "Installing H2O for R"       
+        /usr/bin/R -e "IRkernel::installspec(user = FALSE)"  
+        /usr/bin/R CMD INSTALL `find . -name "h2o*.tar.gz"`        
 
         echo "Installing H2O for Python..."        
-        /usr/local/bin/pip install https://s3.amazonaws.com/h2o-release/h2o/${h2oBranch}/${h2oBuild}/Python/h2o-${h2oVersion}-py2.py3-none-any.whl
-        /usr/local/bin/pip3 install https://s3.amazonaws.com/h2o-release/h2o/${h2oBranch}/${h2oBuild}/Python/h2o-${h2oVersion}-py2.py3-none-any.whl
+        /usr/local/bin/pip install install `find . -name "*.whl"`
+        /usr/local/bin/pip3 install `find . -name "*.whl"`
         
 
         echo "Success!! " >> $h2oLog

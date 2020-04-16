@@ -13,7 +13,7 @@ echo $INSTALLED_VERSION
 if [[ "$LATEST_VERSION" != "$INSTALLED_VERSION" ]]; then
     echo "Updating H2O"
 
-    wget $LATEST_VERSION -O /opt/h2o-latest.zipls
+    wget $LATEST_VERSION -O /opt/h2o-latest.zip
     rm /opt/h2o.jar
     rm -r /opt/h2o-3*
 
