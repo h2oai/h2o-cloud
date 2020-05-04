@@ -92,6 +92,19 @@ resource "null_resource" "provisioners" {
     }
   }
 
+  provisioner "file" {
+    source      = "config.toml"
+    destination = "/tmp/config.toml"
+    connection {
+      type = "ssh"
+      user = "root"
+      agent = false
+      timeout = "5m"
+      host = ibm_is_floating_ip.fip1.address
+      private_key = tls_private_key.ssh_key_keypair.private_key_pem
+    }
+  }
+
   provisioner "remote-exec" {
     inline = [  
       "set -e",    

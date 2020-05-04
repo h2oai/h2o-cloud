@@ -39,6 +39,19 @@ echo "Install DAI"
 wget --quiet https://s3.amazonaws.com/artifacts.h2o.ai/releases/ai/h2o/dai/rel-1.8.5-64/ppc64le-centos7/dai_1.8.5.1_ppc64el.deb
 sudo dpkg -i dai*.deb
 
+#Modify default config.toml
+sudo cp /etc/dai/config.toml /etc/dai/config.toml.bk
+
+while IFS= read -r line; do 
+    if [ ! -z "${line}" ]; then        
+        feature="${line%% *} ="
+        sudo sed -i "s|.*$feature.*|$line|" /etc/dai/config.toml
+    fi
+done < /tmp/config.toml
+
+rm /tmp/config.toml
+
+
 #enable DAI
 echo "enable DAI"
 sudo systemctl enable dai

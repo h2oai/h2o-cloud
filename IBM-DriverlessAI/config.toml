@@ -1,0 +1,1 @@
+enabled_file_systems = "file, upload, hdfs, s3, dtap, minio, snow, kdb, recipe_file, recipe_url"
