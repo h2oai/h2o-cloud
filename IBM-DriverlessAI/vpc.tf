@@ -93,7 +93,7 @@ resource "null_resource" "provisioners" {
   }
 
   provisioner "file" {
-    source      = "config.toml"
+    source      = "config.toml.sh"
     destination = "/tmp/config.toml"
     connection {
       type = "ssh"
