@@ -3,22 +3,22 @@
 set -e
 
 echo "Changing to h2o folder ..."
-cd /etc/h2oai/
+cd /etc/h2o/
 wait
 
 echo "Updating H2O"
 wget http://h2o-release.s3.amazonaws.com/h2o/latest_stable -O /etc/h2oai/latest
 
-LATEST_VERSION=`cat /etc/h2oai/latest`
+LATEST_VERSION=`cat /etc/h2o/latest`
 
-wget $LATEST_VERSION -O /etc/h2oai/h2o-latest.zip
+wget $LATEST_VERSION -O /etc/h2o/h2o-latest.zip
 
-unzip -d /etc/h2oai /etc/h2oai/h2o-latest.zip
+unzip -d /etc/h2oai /etc/h2o/h2o-latest.zip
 
-rm /etc/h2oai/h2o-latest.zip
-cd /etc/h2oai
+rm /etc/h2o/h2o-latest.zip
+cd /etc/h2o
 cd `find . -name 'h2o.jar' | sed 's/.\///;s/\/h2o.jar//g'`
-cp h2o.jar /etc/h2oai
+cp h2o.jar /etc/h2o
 
 echo "Creating Flatfile with info of all Vms in cluster .."
 flatfileName=flatfile.txt
@@ -51,7 +51,7 @@ memTotalMb=$(($memTotalKb / 1024))
 tmp=$(($memTotalMb * 90))
 xmxMb=$(($tmp / 100))
 
-nohup java -XX:OnOutOfMemoryError="kill -9 %p" -Xmx${xmxMb}m -jar /etc/h2oai/h2o.jar -flatfile /etc/h2oai/flatfile.txt 1> /dev/null 2> h2o.err &
+nohup java -XX:OnOutOfMemoryError="kill -9 %p" -Xmx${xmxMb}m -jar /etc/h2o/h2o.jar -flatfile /etc/h2o/flatfile.txt 1> /dev/null 2> h2o.err &
 
 
 echo "Success!!"
