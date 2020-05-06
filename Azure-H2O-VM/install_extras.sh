@@ -13,7 +13,7 @@ LATEST_VERSION=`cat /etc/h2o/latest`
 
 wget $LATEST_VERSION -O /etc/h2o/h2o-latest.zip
 
-unzip -d /etc/h2oai /etc/h2o/h2o-latest.zip
+unzip -d /etc/h2o /etc/h2o/h2o-latest.zip
 
 rm /etc/h2o/h2o-latest.zip
 cd /etc/h2o
