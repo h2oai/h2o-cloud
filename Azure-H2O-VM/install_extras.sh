@@ -7,7 +7,7 @@ cd /etc/h2o/
 wait
 
 echo "Updating H2O"
-wget http://h2o-release.s3.amazonaws.com/h2o/latest_stable -O /etc/h2oai/latest
+wget http://h2o-release.s3.amazonaws.com/h2o/latest_stable -O /etc/h2o/latest
 
 LATEST_VERSION=`cat /etc/h2o/latest`
 
