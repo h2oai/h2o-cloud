@@ -3,33 +3,22 @@
 set -e
 
 echo "Changing to h2o folder ..."
-cd /etc/h2o/
+cd /etc/h2oai/
 wait
 
-# Adjust based on the build of H2O you want to download.
-h2oBranch=rel-turing
+echo "Updating H2O"
+wget http://h2o-release.s3.amazonaws.com/h2o/latest_stable -O /etc/h2oai/latest
 
-echo "Fetching latest build number for branch ${h2oBranch}..."
-curl --silent -o latest https://h2o-release.s3.amazonaws.com/h2o/${h2oBranch}/latest
-h2oBuild=`cat latest`
-wait
+LATEST_VERSION=`cat /etc/h2oai/latest`
 
-echo "Fetching full version number for build ${h2oBuild}..."
-curl --silent -o project_version https://h2o-release.s3.amazonaws.com/h2o/${h2oBranch}/${h2oBuild}/project_version
-h2oVersion=`cat project_version`
-wait
+wget $LATEST_VERSION -O /etc/h2oai/h2o-latest.zip
 
-echo "Downloading H2O version ${h2oVersion} ..."
-curl --silent -o h2o-${h2oVersion}.zip https://s3.amazonaws.com/h2o-release/h2o/${h2oBranch}/${h2oBuild}/h2o-${h2oVersion}.zip &
-wait
+unzip -d /etc/h2oai /etc/h2oai/h2o-latest.zip
 
-echo "Unzipping h2o.jar ..."
-unzip -o h2o-${h2oVersion}.zip 1> /dev/null &
-wait
-
-echo "Copying h2o.jar within node ..."
-cp -f h2o-${h2oVersion}/h2o.jar . &
-wait
+rm /etc/h2oai/h2o-latest.zip
+cd /etc/h2oai
+cd `find . -name 'h2o.jar' | sed 's/.\///;s/\/h2o.jar//g'`
+cp h2o.jar /etc/h2oai
 
 echo "Creating Flatfile with info of all Vms in cluster .."
 flatfileName=flatfile.txt
@@ -62,7 +51,7 @@ memTotalMb=$(($memTotalKb / 1024))
 tmp=$(($memTotalMb * 90))
 xmxMb=$(($tmp / 100))
 
-nohup java -XX:OnOutOfMemoryError="kill -9 %p" -Xmx${xmxMb}m -jar /etc/h2o/h2o.jar -flatfile /etc/h2o/flatfile.txt 1> /dev/null 2> h2o.err &
+nohup java -XX:OnOutOfMemoryError="kill -9 %p" -Xmx${xmxMb}m -jar /etc/h2oai/h2o.jar -flatfile /etc/h2oai/flatfile.txt 1> /dev/null 2> h2o.err &
 
 
 echo "Success!!"
